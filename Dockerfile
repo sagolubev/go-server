@@ -12,7 +12,7 @@ RUN go get -d -v ./...
 RUN go install -v ./...
 
 # This container exposes port 8080 to the outside world
-EXPOSE 8080
+EXPOSE 9090
 
 # Run the executable
 CMD ["go-server"]

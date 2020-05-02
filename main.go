@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/sgolubev/go-server/myserver"
+	"github.com/sagolubev/go-server/myserver"
 )
 
 const addr = "0.0.0.0:9090"
