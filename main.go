@@ -1,17 +1,21 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/sgolubev/go-server/myserver"
 )
 
+const addr = "0.0.0.0:9090"
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Welcome to my website!")
-	})
+	mux := http.NewServeMux()
+	handler := &myserver.MyHandler{}
+	mux.Handle("/favicon.ico", http.NotFoundHandler())
+	mux.Handle("/", handler)
+	log.Printf("Now listening on %s...\n", addr)
+	server := http.Server{Handler: mux, Addr: addr}
+	log.Fatal(server.ListenAndServe())
 
-	fs := http.FileServer(http.Dir("static/"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-
-	http.ListenAndServe(":80", nil)
 }
