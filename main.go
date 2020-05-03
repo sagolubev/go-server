@@ -7,7 +7,7 @@ import (
 	"github.com/sagolubev/go-server/myserver"
 )
 
-const addr = "0.0.0.0:9090"
+const addr = "0.0.0.0:8080"
 
 func main() {
 	mux := http.NewServeMux()

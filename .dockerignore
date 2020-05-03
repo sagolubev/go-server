@@ -1,3 +1,6 @@
+Dockerfile
 README.md
-.DS_Store
+LICENSE
+.dockerignore
 .git
+.gitignore
