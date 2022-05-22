@@ -1,4 +1,4 @@
-FROM golang:1.14.2 as buildSvc
+FROM golang:1.18.2 as buildSvc
 
 WORKDIR $GOPATH/src/github.com/sagolubev/go-server
 
@@ -13,15 +13,15 @@ RUN go install -v ./...
 
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o server
 
-FROM golang:1.14.2 as buildChk
+FROM golang:1.18.2 as buildChk
 
 WORKDIR $GOPATH/src/github.com/sagolubev/go-server
 
 COPY healthcheck ./healthcheck
 
-RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o health-check "github.com/sagolubev/go-server/healthcheck"
+RUN go mod init && CGO_ENABLED=0 go build -a -installsuffix cgo -o health-check "github.com/sagolubev/go-server/healthcheck"
 
-FROM scratch as release
+FROM alpine:3.15.4 as release
 
 COPY --from=buildSvc /go/src/github.com/sagolubev/go-server/server ./server
 COPY --from=buildChk /go/src/github.com/sagolubev/go-server/health-check ./healthcheck
